@@ -1,4 +1,4 @@
-.PHONY: up down control
+.PHONY: up down control rebuild
 
 # Define the location of the docker-compose file
 COMPOSE_FILE := ./docker/docker-compose.yaml
@@ -17,3 +17,10 @@ down:
 # Run bash in control container
 control:
 	@docker exec -it control bash
+
+rebuild:
+	@docker-compose -f $(COMPOSE_FILE) down
+	@docker-compose -f $(COMPOSE_FILE) up -d --build
+	@docker exec node1 service ssh start
+	@docker exec node2 service ssh start
+	@docker exec control ssh-keygen -t rsa -N '' -f /root/.ssh/id_rsa
