@@ -6,18 +6,18 @@
 ```bash
 make up
 ```
-3. Enter in the control container
+2. Enter in the control container
 ```bash
 make control
 ```
 
-4. Copy the ssh key to the nodes, the password is Password123
+3. Copy the ssh key to the nodes, the password is Password123
 ```bash
 ssh-copy-id root@node1
 ssh-copy-id root@node2
 ```
 
-5. Execute ping to the nodes to check if the connection is working
+4. Execute ping to the nodes to check if the connection is working
 ```bash
 ansible -i inventory/docker_nodes all -m ping
 ```
