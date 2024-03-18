@@ -1,0 +1,28 @@
+---
+- hosts: all
+  vars_files:
+    - ../vars/users.yaml
+  tasks:
+    - name: APT Update
+      ansible.builtin.package:
+        name: apt
+        state: latest
+    - name: Upgrade all packages
+      ansible.builtin.package:
+        name: '*'
+        state: latest
+    - name: Install sudo
+      ansible.builtin.package:
+        name: sudo
+        state: present
+    - name: Add the user 'node'
+      ansible.builtin.user:
+        name: "{{ node_user.name }}"
+        comment: NodeJS User
+        uid: "{{ node_user.uid }}"
+        groups: "{{ node_user.groups }}"
+        append: true
+        shell: /bin/bash
+        create_home: true
+        state: present
+  
