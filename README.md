@@ -19,8 +19,7 @@ ssh-copy-id root@node2
 
 5. Execute ping to the nodes to check if the connection is working
 ```bash
-cd /root/ansible
-ansible -i hosts all -m ping
+ansible -i inventory/docker_nodes all -m ping
 ```
 
 ## Ansible commands in the control container

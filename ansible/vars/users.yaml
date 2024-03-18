@@ -1,0 +1,5 @@
+---
+node_user:
+  name: node
+  uid: 1040
+  groups: sudo
