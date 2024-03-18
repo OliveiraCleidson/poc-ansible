@@ -1,0 +1,29 @@
+---
+- hosts: all
+  vars_files:
+    - ../vars/node.yml
+  environment:
+    NVM_DIR: "{{ node.nvm_dir }}"
+  roles:
+    - role: '/root/ansible/roles/nvm_install'
+      bacome: yes
+      vars:
+        nvm_node_version: "{{ node.version }}"
+        nvm_version: "{{ node.nvm_version }}"
+        nvm_install_path: "{{ node.nvm_install_dir }}"
+        nvm_force_install: true
+  post_tasks:
+    - name: Set read and execute permissions for nvm.sh to all users
+      become: yes
+      ansible.builtin.file:
+        path: "{{ node.nvm_install_dir }}/nvm.sh"
+        mode: "u=rwx,g=rx,o=rx"
+    - name: Set read and execute permissions for nvm directory
+      become: yes
+      ansible.builtin.file:
+        path: "{{ node.nvm_dir }}"
+        mode: "u=rwx,g=rx,o=rx"
+    - name: Update NPM to {{ node.npm_version }}
+      become: yes
+      ansible.builtin.shell:
+        cmd: '. {{ node.nvm_install_dir }}/nvm.sh && npm install npm@{{node.npm_version}} -g'
