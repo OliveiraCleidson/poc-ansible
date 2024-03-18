@@ -1,0 +1,12 @@
+---
+- name: Install dependencies [RedHat]
+  become: true
+  become_user: root
+  ansible.builtin.yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - "@Development Tools"
+      - git
+      - curl
+      - openssl-devel
